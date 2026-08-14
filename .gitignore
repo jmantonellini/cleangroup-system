@@ -1,0 +1,15 @@
+# Datos locales (NUNCA versionar)
+data/postgres/
+data/odoo/
+data/certbot/
+certbot-data/
+backups/
+
+# Variables de entorno (si usás .env después)
+.env
+
+# Archivos temporales
+*.sql
+*.tar.gz
+*.log
+.DS_Store
