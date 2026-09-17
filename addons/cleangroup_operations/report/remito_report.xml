@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="paperformat_remito" model="report.paperformat">
+        <field name="name">Remito CleanGroup A4</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_remito" model="ir.actions.report">
+        <field name="name">Remito</field>
+        <field name="model">cleangroup.supply.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cleangroup_operations.report_remito</field>
+        <field name="report_file">cleangroup_operations.report_remito</field>
+        <field name="print_report_name">'Remito - %s' % (object.name)</field>
+        <field name="paperformat_id" ref="paperformat_remito"/>
+        <field name="binding_model_id" ref="model_cleangroup_supply_order"/>
+        <field name="binding_type">action</field>
+    </record>
+</odoo>

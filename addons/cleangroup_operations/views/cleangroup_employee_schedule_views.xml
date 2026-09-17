@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_cleangroup_employee_schedule_list" model="ir.ui.view">
+        <field name="name">cleangroup.employee.schedule.list</field>
+        <field name="model">cleangroup.employee.schedule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="partner_id"/>
+                <field name="location_id"/>
+                <field name="employee_id"/>
+                <field name="day_of_week"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cleangroup_employee_schedule_form" model="ir.ui.view">
+        <field name="name">cleangroup.employee.schedule.form</field>
+        <field name="model">cleangroup.employee.schedule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="location_id"/>
+                        <field name="employee_id"/>
+                        <field name="day_of_week"/>
+                        <field name="start_time" widget="float_time"/>
+                        <field name="end_time" widget="float_time"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cleangroup_employee_schedule" model="ir.actions.act_window">
+        <field name="name">Horarios de Empleados</field>
+        <field name="res_model">cleangroup.employee.schedule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

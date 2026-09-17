@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="webclient_branding" inherit_id="web.layout">
+    <xpath expr="//title" position="replace">
+      <title t-esc="title or 'CleanGroup'"/>
+    </xpath>
+    <xpath expr="//link[@rel='shortcut icon']" position="replace">
+      <link type="image/svg+xml" rel="icon" href="/cleangroup_operations/static/src/img/favicon.svg"/>
+    </xpath>
+  </template>
+</odoo>

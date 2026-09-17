@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_remito">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="font-family: Arial, sans-serif; color: #20252b; padding: 0 4mm;">
+                    <div style="border-bottom: 2px solid #4aaed0; padding-bottom: 12px; margin-bottom: 18px;">
+                        <div class="row" style="align-items: center;">
+                            <div class="col-7">
+                                <img t-if="o.company_id.logo" class="o_company_logo_big" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" style="max-height: 58px; max-width: 250px;"/>
+                                <div t-if="not o.company_id.logo" style="font-size: 22px; font-weight: bold; color: #2d8eaf;">CLEANGROUP</div>
+                                <div style="font-size: 11px; color: #66727d; margin-top: 4px;" t-field="o.company_id.name"/>
+                            </div>
+                            <div class="col-5 text-right">
+                                <div style="font-size: 25px; font-weight: bold; letter-spacing: 1px; color: #2d8eaf;">REMITO</div>
+                                <div style="font-size: 15px; font-weight: bold; margin-top: 4px;" t-field="o.name"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 22px;">
+                        <div class="col-6" style="padding-right: 18px;">
+                            <div style="background: #e8f6fb; border-left: 4px solid #4aaed0; padding: 10px 12px; min-height: 82px;">
+                                <div style="font-size: 10px; text-transform: uppercase; color: #66727d; margin-bottom: 5px;">Destinatario</div>
+                                <strong t-field="o.partner_id.name"/>
+                                <br/>
+                                <span t-field="o.location_id.name"/>
+                                <br/>
+                                <span t-field="o.location_id.street"/>
+                                <span t-if="o.location_id.city">,                                    <span t-field="o.location_id.city"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6" style="padding-left: 18px;">
+                            <div style="border: 1px solid #d8e0e4; padding: 10px 12px; min-height: 82px;">
+                                <div>
+                                    <strong>Fecha:</strong>
+                                    <span t-field="o.date"/>
+                                </div>
+                                <div>
+                                    <strong>Supervisor:</strong>
+                                    <span t-field="o.supervisor_id.name"/>
+                                </div>
+                                <div>
+                                    <strong>Depósito:</strong>
+                                    <span t-field="o.warehouse_id.name"/>
+                                </div>
+                                <div>
+                                    <strong>Empresa:</strong>
+                                    <span t-field="o.company_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-sm" style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+                        <thead style="background: #4aaed0; color: white;">
+                            <tr>
+                                <th style="padding: 9px 10px; text-align: left;">Producto</th>
+                                <th style="padding: 9px 10px; text-align: right; width: 120px;">Cantidad</th>
+                                <th style="padding: 9px 10px; text-align: right; width: 120px;">Unidad</th>
+                            </tr>
+                        </thead>
+                        <tbody style="border: 1px solid #d8e0e4;">
+                            <tr t-foreach="o.line_ids" t-as="line">
+                                <td style="padding: 9px 10px; border-bottom: 1px solid #d8e0e4;">
+                                    <span t-field="line.product_id.name"/>
+                                </td>
+                                <td style="padding: 9px 10px; border-bottom: 1px solid #d8e0e4; text-align: right;">
+                                    <span t-field="line.quantity"/>
+                                </td>
+                                <td style="padding: 9px 10px; border-bottom: 1px solid #d8e0e4; text-align: right;">
+                                    <span t-field="line.uom_id.name"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-6" style="padding-right: 18px;">
+                            <div style="border-top: 1px solid #d8e0e4; padding-top: 10px; min-height: 90px;">
+                                <strong>Notas de Entrega</strong>
+                                <br/>
+                                <span t-field="o.delivery_notes"/>
+                            </div>
+                        </div>
+                        <div class="col-6" style="padding-left: 18px;">
+                            <div style="border-top: 1px solid #d8e0e4; padding-top: 10px; text-align: center; min-height: 90px;">
+                                <strong>Firma Digital</strong>
+                                <br/>
+                                <img t-if="o.signature" t-att-src="image_data_uri(o.signature)" style="max-height: 120px; max-width: 300px; border: 1px solid #ccc;"/>
+                                <span t-if="not o.signature">Sin firma</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-if="o.delivery_photo" class="row" style="margin-top: 20px;">
+                        <div class="col-12">
+                            <strong>Foto de Entrega</strong>
+                            <br/>
+                            <img t-att-src="image_data_uri(o.delivery_photo)" style="max-height: 200px; max-width: 400px; border: 1px solid #ccc;"/>
+                        </div>
+                    </div>
+                    <div style="border-top: 1px solid #d8e0e4; margin-top: 30px; padding-top: 8px; text-align: center; color: #66727d; font-size: 10px;">
+                            Generado por CleanGroup Operaciones
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

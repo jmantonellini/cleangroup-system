@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="action_cleangroup_current_inventory" model="ir.actions.act_window">
+    <field name="name">Existencias actuales</field>
+    <field name="res_model">stock.quant</field>
+    <field name="view_mode">list</field>
+    <field name="views" eval="[(ref('stock.view_stock_quant_tree_inventory_editable'), 'list')]"/>
+    <field name="domain">[('location_id.usage', 'in', ['internal', 'transit'])]</field>
+    <field name="context">{'inventory_mode': True, 'no_at_date': True}</field>
+  </record>
+
+  <record id="stock.menu_stock_root" model="ir.ui.menu">
+    <field name="action" ref="action_cleangroup_current_inventory"/>
+  </record>
+
+  <record id="view_stock_quant_inventory_cleangroup" model="ir.ui.view">
+    <field name="name">stock.quant.inventory.list.cleangroup</field>
+    <field name="model">stock.quant</field>
+    <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+    <field name="arch" type="xml">
+      <field name="product_id" position="before">
+        <field name="cleangroup_product_image" widget="image" optional="show"/>
+      </field>
+      <field name="available_quantity" position="attributes">
+        <attribute name="optional">show</attribute>
+      </field>
+      <field name="quantity" position="attributes">
+        <attribute name="optional">show</attribute>
+      </field>
+    </field>
+  </record>
+</odoo>

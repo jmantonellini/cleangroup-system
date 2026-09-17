@@ -1,0 +1,26 @@
+/* Signature Pad Widget */
+.o_signature_pad {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    background: #fafafa;
+    cursor: crosshair;
+    touch-action: none;
+    width: 100%;
+    height: 200px;
+}
+.o_signature_pad:hover {
+    border-color: #159895;
+}
+.o_signature_pad canvas {
+    width: 100%;
+    height: 100%;
+}
+.o_signature_controls {
+    margin-top: 8px;
+    text-align: center;
+}
+.o_signature_preview img {
+    max-height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

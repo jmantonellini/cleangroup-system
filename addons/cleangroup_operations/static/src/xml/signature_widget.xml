@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="cleangroup.SignaturePad">
+        <div class="o_signature_pad_container">
+            <div t-if="!state.value" class="o_signature_pad" t-ref="container">
+                <canvas t-ref="canvas"/>
+            </div>
+            <div t-if="state.value" class="o_signature_preview">
+                <img t-att-src="getPreviewSrc()" style="max-height: 120px; border: 1px solid #ddd; border-radius: 4px;"/>
+                <div class="o_signature_controls">
+                    <button type="button" class="btn btn-sm btn-secondary o_signature_clear" t-on-click="onClear">Borrar y rehacer</button>
+                </div>
+            </div>
+            <div t-if="!state.value" class="o_signature_controls">
+                <button type="button" class="btn btn-sm btn-secondary o_signature_clear" t-on-click="onClear">Limpiar</button>
+                <span class="text-muted ms-2">Dibuje su firma con el dedo o mouse</span>
+            </div>
+        </div>
+    </t>
+</templates>

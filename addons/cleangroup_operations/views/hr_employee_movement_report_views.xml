@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_hr_employee_movement_report_form" model="ir.ui.view">
+    <field name="name">cleangroup.employee.movement.report.form</field>
+    <field name="model">cleangroup.employee.movement.report</field>
+    <field name="arch" type="xml">
+      <form string="Reporte de Altas y Bajas">
+        <header>
+          <button name="action_generate_report" type="object" string="Generar Reporte" class="oe_highlight"/>
+        </header>
+        <sheet>
+          <group>
+            <group string="Filtros">
+              <field name="company_id"/>
+              <field name="movement_type"/>
+              <field name="date_from"/>
+              <field name="date_to"/>
+            </group>
+            <group string="Totales">
+              <field name="hire_count"/>
+              <field name="offboarding_count"/>
+            </group>
+          </group>
+          <separator string="Empleados encontrados"/>
+          <field name="employee_ids" nolabel="1">
+            <list create="false" edit="false" delete="false">
+              <field name="name"/>
+              <field name="company_id"/>
+              <field name="x_fecha_ingreso"/>
+              <field name="x_fecha_baja"/>
+              <field name="x_motivo_baja"/>
+              <field name="job_id" optional="show"/>
+            </list>
+          </field>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_cleangroup_employee_movement_report" model="ir.actions.act_window">
+    <field name="name">Reporte de Altas y Bajas</field>
+    <field name="res_model">cleangroup.employee.movement.report</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_hr_employee_movement_report_form"/>
+    <field name="target">current</field>
+  </record>
+</odoo>

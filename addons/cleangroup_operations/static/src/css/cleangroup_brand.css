@@ -1,0 +1,82 @@
+:root {
+    --cleangroup-blue: #3E7DB1;
+    --cleangroup-blue-dark: #3E7DB1;
+    --cleangroup-blue-soft: #e8f6fb;
+    --link-color: var(--cleangroup-blue);
+    --link-hover-color: var(--cleangroup-blue-dark);
+    --btn-bg: transparent;
+    --btn-border-color: transparent;
+    --btn-hover-color: var(--cleangroup-blue-dark);
+    --btn-hover-border-color: transparent;
+}
+
+.o_main_navbar {
+    --NavBar-entry-backgroundColor: var(--cleangroup-blue) !important;
+    --NavBar-entry-backgroundColor--hover: var(--cleangroup-blue-dark) !important;
+    --NavBar-entry-backgroundColor--focus: var(--cleangroup-blue-dark) !important;
+    --NavBar-entry-backgroundColor--active: var(--cleangroup-blue-dark) !important;
+    background-color: var(--cleangroup-blue) !important;
+    border-color: var(--cleangroup-blue-dark) !important;
+}
+
+.o_main_navbar .o_menu_sections {
+    --NavBar-entry-backgroundColor: var(--cleangroup-blue) !important;
+    --NavBar-entry-backgroundColor--hover: var(--cleangroup-blue-dark) !important;
+    --NavBar-entry-backgroundColor--focus: var(--cleangroup-blue-dark) !important;
+    --NavBar-entry-backgroundColor--active: var(--cleangroup-blue-dark) !important;
+}
+
+.o_main_navbar .o_menu_brand,
+.o_main_navbar .o_menu_sections .dropdown-toggle,
+.o_main_navbar .o_menu_sections .dropdown-item,
+.o_main_navbar .o_nav_entry {
+    color: #ffffff !important;
+}
+
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:focus,
+.o_main_navbar .o_nav_entry:hover,
+.o_main_navbar .o_nav_entry:focus {
+    background-color: var(--cleangroup-blue-dark) !important;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary.active,
+.o_button_primary {
+    background-color: var(--cleangroup-blue) !important;
+    border-color: var(--cleangroup-blue-dark) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.o_button_primary:hover,
+.o_button_primary:focus {
+    background-color: var(--cleangroup-blue-dark) !important;
+    border-color: #247b99 !important;
+}
+
+a,
+.o_form_view .o_form_uri,
+.o_list_view .o_list_record_selector input:checked {
+    color: var(--cleangroup-blue-dark);
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover,
+.o_notebook .nav-link.active {
+    color: var(--cleangroup-blue-dark) !important;
+    border-bottom-color: var(--cleangroup-blue) !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+.o_input:focus {
+    border-color: var(--cleangroup-blue) !important;
+    box-shadow: 0 0 0 0.2rem rgba(62, 125, 177, 0.2) !important;
+}
+
+.o_kanban_view .oe_kanban_color_0,
+.o_statusbar_status.o_arrow_button_current {
+    background-color: var(--cleangroup-blue) !important;
+}

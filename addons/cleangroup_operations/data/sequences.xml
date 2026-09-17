@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="seq_cleangroup_supply_order" model="ir.sequence">
+        <field name="name">Orden de Insumos</field>
+        <field name="code">cleangroup.supply.order</field>
+        <field name="prefix">OI/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

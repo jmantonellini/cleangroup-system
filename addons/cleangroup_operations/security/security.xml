@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="rule_location_supervisor" model="ir.rule">
+        <field name="name">Supervisor: Ubicaciones de sus Sedes</field>
+        <field name="model_id" ref="model_cleangroup_location"/>
+        <field name="domain_force">[('id', '!=', 0)] if user.has_group('base.group_system') else ['|', ('supervisor_ids', 'in', [user.id]), ('warehouse_id', 'in', user.cleangroup_warehouse_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_supply_order_supervisor" model="ir.rule">
+        <field name="name">Supervisor: Órdenes de sus Sedes</field>
+        <field name="model_id" ref="model_cleangroup_supply_order"/>
+        <field name="domain_force">[('id', '!=', 0)] if user.has_group('base.group_system') else ['|', ('location_id.supervisor_ids', 'in', [user.id]), ('warehouse_id', 'in', user.cleangroup_warehouse_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_location_supply_manager" model="ir.rule">
+        <field name="name">Administrador de Insumos: Todas las Ubicaciones</field>
+        <field name="model_id" ref="model_cleangroup_location"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('cleangroup_operations.group_cleangroup_supply_manager'))]"/>
+    </record>
+
+    <record id="rule_schedule_supply_manager" model="ir.rule">
+        <field name="name">Administrador de Insumos: Todos los Horarios</field>
+        <field name="model_id" ref="model_cleangroup_employee_schedule"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('cleangroup_operations.group_cleangroup_supply_manager'))]"/>
+    </record>
+
+    <record id="rule_supply_order_supply_manager" model="ir.rule">
+        <field name="name">Administrador de Insumos: Todas las Órdenes</field>
+        <field name="model_id" ref="model_cleangroup_supply_order"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('cleangroup_operations.group_cleangroup_supply_manager'))]"/>
+    </record>
+
+    <record id="rule_location_hr_read" model="ir.rule">
+        <field name="name">RR. HH.: Ver todas las ubicaciones</field>
+        <field name="model_id" ref="model_cleangroup_location"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_schedule_hr_read" model="ir.rule">
+        <field name="name">RR. HH.: Gestionar todos los horarios</field>
+        <field name="model_id" ref="model_cleangroup_employee_schedule"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

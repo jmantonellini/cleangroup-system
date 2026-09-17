@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cleangroup_location_user,Ubicación Usuario,model_cleangroup_location,base.group_user,1,0,0,0
+access_cleangroup_location_manager,Ubicación Manager,model_cleangroup_location,base.group_system,1,1,1,1
+access_cleangroup_location_supply_manager,Ubicación Administrador de Insumos,model_cleangroup_location,cleangroup_operations.group_cleangroup_supply_manager,1,1,1,1
+access_cleangroup_schedule_user,Horario Usuario,model_cleangroup_employee_schedule,base.group_user,1,0,0,0
+access_cleangroup_schedule_manager,Horario Manager,model_cleangroup_employee_schedule,base.group_system,1,1,1,1
+access_cleangroup_schedule_supply_manager,Horario Administrador de Insumos,model_cleangroup_employee_schedule,cleangroup_operations.group_cleangroup_supply_manager,1,1,1,1
+access_cleangroup_schedule_hr,Horario RR. HH.,model_cleangroup_employee_schedule,hr.group_hr_user,1,1,1,1
+access_cleangroup_supply_order_user,Orden Supervisor de Sede,model_cleangroup_supply_order,cleangroup_operations.group_cleangroup_supply_user,1,1,1,0
+access_cleangroup_supply_order_manager,Orden Manager,model_cleangroup_supply_order,base.group_system,1,1,1,1
+access_cleangroup_supply_order_supply_manager,Orden Administrador de Insumos,model_cleangroup_supply_order,cleangroup_operations.group_cleangroup_supply_manager,1,1,1,1
+access_cleangroup_supply_order_line_user,Línea Orden Usuario,model_cleangroup_supply_order_line,base.group_user,1,1,1,1
+access_cleangroup_dashboard_user,Panel Supervisor Usuario,model_cleangroup_supervisor_dashboard,base.group_user,1,1,1,1
+access_cleangroup_wizard_user,Asistente Entrega Usuario,model_cleangroup_delivery_confirmation_wizard,base.group_user,1,1,1,1
+access_cleangroup_weekday_schedule_wizard_user,Asistente Horario Lunes a Viernes,model_cleangroup_weekday_schedule_wizard,base.group_user,1,1,1,1
+access_cleangroup_employee_movement_report_hr,Reporte Altas y Bajas RRHH,model_cleangroup_employee_movement_report,hr.group_hr_user,1,1,1,1

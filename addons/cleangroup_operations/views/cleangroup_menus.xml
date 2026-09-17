@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_cleangroup_root" name="Insumos" groups="cleangroup_operations.group_cleangroup_supply_user,cleangroup_operations.group_cleangroup_supply_manager" sequence="50"/>
+
+    <!-- Operations / Supervisor Section -->
+    <menuitem id="menu_cleangroup_operations" name="Operaciones" parent="menu_cleangroup_root" groups="cleangroup_operations.group_cleangroup_supply_user,cleangroup_operations.group_cleangroup_supply_manager" sequence="10"/>
+
+    <menuitem id="menu_cleangroup_dashboard" name="Panel del Supervisor" parent="menu_cleangroup_operations" action="action_open_supervisor_dashboard" groups="cleangroup_operations.group_cleangroup_supply_user,cleangroup_operations.group_cleangroup_supply_manager" sequence="5"/>
+
+    <menuitem id="menu_cleangroup_my_locations" name="Mis Ubicaciones" parent="menu_cleangroup_operations" action="action_cleangroup_my_locations" groups="cleangroup_operations.group_cleangroup_supply_user,cleangroup_operations.group_cleangroup_supply_manager" sequence="10"/>
+
+    <menuitem id="menu_cleangroup_supply_orders" name="Órdenes de Insumos" parent="menu_cleangroup_operations" action="action_cleangroup_supply_order" groups="cleangroup_operations.group_cleangroup_supply_user,cleangroup_operations.group_cleangroup_supply_manager" sequence="20"/>
+
+    <!-- Configuration Section -->
+    <menuitem id="menu_cleangroup_configuration" name="Configuración" parent="menu_cleangroup_root" groups="cleangroup_operations.group_cleangroup_supply_manager" sequence="20"/>
+
+    <menuitem id="menu_cleangroup_locations" name="Ubicaciones" parent="menu_cleangroup_configuration" action="action_cleangroup_location" groups="cleangroup_operations.group_cleangroup_supply_manager" sequence="10"/>
+
+    <menuitem id="menu_cleangroup_schedules" name="Horarios de Empleados" parent="menu_cleangroup_configuration" action="action_cleangroup_employee_schedule" groups="cleangroup_operations.group_cleangroup_supply_manager" sequence="20"/>
+
+    <!-- Reporting Section -->
+    <menuitem id="menu_cleangroup_reporting" name="Reportes" parent="menu_cleangroup_root" groups="cleangroup_operations.group_cleangroup_supply_manager" sequence="30"/>
+
+    <menuitem id="menu_cleangroup_consumption_report" name="Consumo por Ubicación" parent="menu_cleangroup_reporting" action="action_cleangroup_reporting" sequence="10"/>
+    <menuitem id="menu_cleangroup_employee_movement_report" name="Reporte de Altas y Bajas" parent="menu_cleangroup_reporting" action="action_cleangroup_employee_movement_report" groups="hr.group_hr_user" sequence="20"/>
+
+    <!-- Keep the main menu focused for non-administrative users. -->
+    <record id="mail.menu_root_discuss" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+    <record id="contacts.menu_contacts" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+    <record id="sale.sale_menu_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+    <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+    <record id="hr.menu_hr_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+    <record id="base.menu_management" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+</odoo>

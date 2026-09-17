@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Supply Order List -->
+    <record id="view_cleangroup_supply_order_list" model="ir.ui.view">
+        <field name="name">cleangroup.supply.order.list</field>
+        <field name="model">cleangroup.supply.order</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'" decoration-success="state == 'done'" decoration-info="state == 'confirmed'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id" optional="show"/>
+                <field name="company_id" optional="show"/>
+                <field name="location_id"/>
+                <field name="supervisor_id"/>
+                <field name="total_items"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirmed'" decoration-success="state == 'done'" decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Supply Order Form -->
+    <record id="view_cleangroup_supply_order_form" model="ir.ui.view">
+        <field name="name">cleangroup.supply.order.form</field>
+        <field name="model">cleangroup.supply.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Enviar Orden" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_open_delivery_wizard" string="Confirmar Entrega y Firmar" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+                    <button name="action_draft" string="Volver a Borrador" type="object" invisible="state not in ('confirmed','cancelled')"/>
+                    <button name="action_cancel" string="Cancelar" type="object" invisible="state not in ('draft','confirmed')"/>
+                    <button name="action_print_remito" string="Imprimir Remito" type="object" icon="fa-print" invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_picking" type="object" class="oe_stat_button" icon="fa-truck" invisible="not stock_picking_id">
+                            <span class="o_stat_text">Movimiento</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="location_id" options="{'no_create': True}" readonly="state != 'draft'"/>
+                            <field name="warehouse_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="supervisor_id" options="{'no_create': True}" readonly="state != 'draft'"/>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="total_items" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Líneas de Orden" invisible="state == 'draft'">
+                            <field name="line_ids" readonly="1">
+                                <list>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Líneas de Orden" invisible="state != 'draft'">
+                            <field name="available_product_ids" invisible="1"/>
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id" domain="[('id', 'in', parent.available_product_ids)]" options="{'no_create': True}"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Prueba de Entrega" invisible="state != 'done'">
+                            <group>
+                                <group>
+                                    <field name="confirmed_date" readonly="1"/>
+                                    <field name="delivery_notes" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="signature" widget="signature_pad" readonly="1"/>
+                                    <field name="delivery_photo" widget="image" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notas">
+                            <field name="notes" readonly="state != 'draft'"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Supply Order Search -->
+    <record id="view_cleangroup_supply_order_search" model="ir.ui.view">
+        <field name="name">cleangroup.supply.order.search</field>
+        <field name="model">cleangroup.supply.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="location_id"/>
+                <field name="supervisor_id"/>
+                <filter name="draft" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                <filter name="confirmed" string="Confirmada" domain="[('state', '=', 'confirmed')]"/>
+                <filter name="done" string="Entregada" domain="[('state', '=', 'done')]"/>
+                <filter name="my_orders" string="Mis Órdenes" domain="[('supervisor_id', '=', uid)]"/>
+                <filter name="active_orders" string="Órdenes Activas" domain="[('state', 'in', ('draft','confirmed'))]"/>
+                <group expand="0" string="Agrupar Por">
+                    <filter name="group_location" string="Ubicación" context="{'group_by': 'location_id'}"/>
+                    <filter name="group_month" string="Mes" context="{'group_by': 'date:month'}"/>
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Pivot -->
+    <record id="view_cleangroup_supply_order_pivot" model="ir.ui.view">
+        <field name="name">cleangroup.supply.order.pivot</field>
+        <field name="model">cleangroup.supply.order</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="location_id" type="row"/>
+                <field name="date" type="col" interval="month"/>
+                <field name="total_items" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Graph -->
+    <record id="view_cleangroup_supply_order_graph" model="ir.ui.view">
+        <field name="name">cleangroup.supply.order.graph</field>
+        <field name="model">cleangroup.supply.order</field>
+        <field name="arch" type="xml">
+            <graph type="bar">
+                <field name="date" interval="month"/>
+                <field name="total_items" type="measure"/>
+                <field name="location_id" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Supply Order Action -->
+    <record id="action_cleangroup_supply_order" model="ir.actions.act_window">
+        <field name="name">Órdenes de Insumos</field>
+        <field name="res_model">cleangroup.supply.order</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="search_view_id" ref="view_cleangroup_supply_order_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear la primera orden de insumos
+            </p>
+        </field>
+    </record>
+</odoo>

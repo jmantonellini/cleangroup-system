@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Location List -->
+    <record id="view_cleangroup_location_list" model="ir.ui.view">
+        <field name="name">cleangroup.location.list</field>
+        <field name="model">cleangroup.location</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id" optional="show"/>
+                <field name="company_id" optional="show"/>
+                <field name="warehouse_id"/>
+                <field name="supervisor_ids" widget="many2many_tags" optional="show"/>
+                <field name="today_employee_count" optional="show"/>
+                <field name="order_count" optional="show"/>
+                <field name="google_maps_url" invisible="1"/>
+                <button name="action_view_orders" type="object" string="Órdenes" class="btn btn-sm btn-primary"/>
+                <button name="action_create_order" type="object" string="Nueva Orden" class="btn btn-sm btn-success"/>
+                <button name="action_open_google_maps" type="object" string="Mapa" icon="fa-map-marker" class="btn btn-sm btn-secondary" invisible="not google_maps_url"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Location Form -->
+    <record id="view_cleangroup_location_form" model="ir.ui.view">
+        <field name="name">cleangroup.location.form</field>
+        <field name="model">cleangroup.location</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_orders" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="order_count" widget="statinfo" string="Órdenes"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id" placeholder="Seleccionar cliente existente..."/>
+                            <field name="warehouse_id"/>
+                            <field name="company_id" readonly="1"/>
+                            <field name="google_maps_url" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="supervisor_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <button name="action_open_google_maps" type="object" string="Abrir en Google Maps" icon="fa-map-marker" class="oe_highlight" invisible="not google_maps_url"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Dirección y Mapa">
+                            <group>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                                <field name="latitude"/>
+                                <field name="longitude"/>
+                            </group>
+                        </page>
+                        <page string="Horarios de Empleados">
+                            <button name="action_add_weekday_schedule" type="object" string="Agregar Lunes a Viernes" icon="fa-calendar-plus-o" class="oe_highlight"/>
+                            <field name="employee_schedule_ids">
+                                <list editable="bottom">
+                                    <field name="employee_id"/>
+                                    <field name="day_of_week"/>
+                                    <field name="start_time" widget="float_time"/>
+                                    <field name="end_time" widget="float_time"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Órdenes de Insumos">
+                            <field name="supply_order_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="supervisor_id"/>
+                                    <field name="state"/>
+                                    <field name="total_items"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Location Search -->
+    <record id="view_cleangroup_location_search" model="ir.ui.view">
+        <field name="name">cleangroup.location.search</field>
+        <field name="model">cleangroup.location</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="supervisor_ids"/>
+                <filter name="my_locations" string="Mis Ubicaciones" domain="[('supervisor_ids', 'in', [uid])]"/>
+                <group expand="0" string="Agrupar Por">
+                    <filter name="group_partner" string="Cliente" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_warehouse" string="Depósito" context="{'group_by': 'warehouse_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Location Kanban -->
+    <record id="view_cleangroup_location_kanban" model="ir.ui.view">
+        <field name="name">cleangroup.location.kanban</field>
+        <field name="model">cleangroup.location</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="company_id"/>
+                <field name="warehouse_id"/>
+                <field name="company_id"/>
+                <field name="order_count"/>
+                <field name="today_employee_count"/>
+                <field name="google_maps_url"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div t-if="record.partner_id.raw_value">
+                                        <i class="fa fa-building"/>
+                                        <field name="partner_id"/>
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-archive"/>
+                                        <field name="warehouse_id"/>
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-users"/>
+                                        <t t-esc="record.today_employee_count.raw_value"/>
+ empleados hoy
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-shopping-cart"/>
+                                        <t t-esc="record.order_count.raw_value"/>
+ órdenes
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left"/>
+                                    <div class="oe_kanban_bottom_right">
+                                        <button name="action_create_order" type="object" class="btn btn-primary btn-sm">Ordenar</button>
+                                        <t t-if="record.google_maps_url.raw_value">
+                                            <button name="action_open_google_maps" type="object" class="btn btn-secondary btn-sm" title="Abrir en Google Maps">
+                                                <i class="fa fa-map-marker"/>
+                                            </button>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_cleangroup_location" model="ir.actions.act_window">
+        <field name="name">Ubicaciones</field>
+        <field name="res_model">cleangroup.location</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="view_cleangroup_location_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear la primera ubicación de operación
+            </p>
+        </field>
+    </record>
+</odoo>

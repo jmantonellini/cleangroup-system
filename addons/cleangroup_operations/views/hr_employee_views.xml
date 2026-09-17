@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extend Employee Form to show CleanGroup fields -->
+    <record id="view_employee_form_inherit_cleangroup" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.cleangroup</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='personal_information']" position="after">
+                <page string="Horarios Limpiezas" name="cleangroup_info">
+                    <group>
+                        <group>
+                            <field name="x_fecha_ingreso"/>
+                            <field name="x_fecha_reclutamiento" groups="hr.group_hr_user"/>
+                            <field name="x_fecha_baja" groups="hr.group_hr_user"/>
+                            <field name="x_hs_semanales"/>
+                            <field name="x_convenio"/>
+                            <field name="x_categoria"/>
+                        </group>
+                    </group>
+                    <group string="Baja" groups="hr.group_hr_user">
+                        <field name="x_motivo_baja" placeholder="Indicar el motivo de la baja..."/>
+                    </group>
+                    <group>
+                        <field name="x_notas"/>
+                    </group>
+                    <separator string="Clientes y horarios"/>
+                    <button name="action_add_weekday_schedule" type="object" string="Agregar Lunes a Viernes" icon="fa-calendar-plus-o" class="oe_highlight"/>
+                    <field name="cleangroup_schedule_ids" context="{'default_employee_id': id}">
+                        <list>
+                            <field name="partner_id"/>
+                            <field name="location_id"/>
+                            <field name="day_of_week"/>
+                            <field name="start_time" widget="float_time"/>
+                            <field name="end_time" widget="float_time"/>
+                            <field name="active"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend Employee List to show key CleanGroup columns -->
+    <record id="view_employee_list_inherit_cleangroup" model="ir.ui.view">
+        <field name="name">hr.employee.list.inherit.cleangroup</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="x_zona" optional="show"/>
+                <field name="x_hs_semanales" optional="show"/>
+                <field name="x_convenio" optional="hide"/>
+                <field name="x_categoria" optional="hide"/>
+                <field name="x_fecha_reclutamiento" optional="hide" groups="hr.group_hr_user"/>
+                <field name="x_fecha_baja" optional="hide" groups="hr.group_hr_user"/>
+                <field name="cleangroup_client_ids" widget="many2many_tags" optional="show"/>
+                <field name="cleangroup_schedule_summary" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
