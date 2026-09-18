@@ -4,7 +4,7 @@
         <field name="name">Supervisor: Ubicaciones de sus Sedes</field>
         <field name="model_id" ref="model_cleangroup_location"/>
         <field name="domain_force">[('id', '!=', 0)] if user.has_group('base.group_system') else ['|', ('supervisor_ids', 'in', [user.id]), ('warehouse_id', 'in', user.cleangroup_warehouse_ids.ids)]</field>
-        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="groups" eval="[(4, ref('cleangroup_operations.group_cleangroup_supply_user'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
@@ -23,9 +23,9 @@
     </record>
 
     <record id="rule_location_supply_manager" model="ir.rule">
-        <field name="name">Administrador de Insumos: Todas las Ubicaciones</field>
+        <field name="name">Administrador de Insumos: Ubicaciones de sus Sedes</field>
         <field name="model_id" ref="model_cleangroup_location"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="domain_force">[('id', '!=', 0)] if user.has_group('base.group_system') else [('warehouse_id', 'in', user.cleangroup_warehouse_ids.ids)]</field>
         <field name="groups" eval="[(4, ref('cleangroup_operations.group_cleangroup_supply_manager'))]"/>
     </record>
 

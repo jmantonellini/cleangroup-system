@@ -24,28 +24,24 @@
     <menuitem id="menu_cleangroup_consumption_report" name="Consumo por Ubicación" parent="menu_cleangroup_reporting" action="action_cleangroup_reporting" sequence="10"/>
     <menuitem id="menu_cleangroup_employee_movement_report" name="Reporte de Altas y Bajas" parent="menu_cleangroup_reporting" action="action_cleangroup_employee_movement_report" groups="hr.group_hr_user" sequence="20"/>
 
-    <!-- Keep the main menu focused for non-administrative users. -->
+    <!-- Module visibility is controlled by the module access groups on users. -->
     <record id="mail.menu_root_discuss" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system'), ref('cleangroup_operations.group_module_discuss')])]"/>
     </record>
 
     <record id="contacts.menu_contacts" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system'), ref('cleangroup_operations.group_module_contacts')])]"/>
     </record>
 
     <record id="sale.sale_menu_root" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system'), ref('cleangroup_operations.group_module_sales')])]"/>
     </record>
 
     <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system'), ref('cleangroup_operations.group_module_dashboards')])]"/>
     </record>
 
     <record id="hr.menu_hr_root" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
-    </record>
-
-    <record id="base.menu_management" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system'), ref('cleangroup_operations.group_module_hr')])]"/>
     </record>
 </odoo>
